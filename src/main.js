@@ -1,5 +1,11 @@
-// Este es el punto de entrada de tu aplicacion
+ import {showChange} from "./lib/router.js" 
 
-import { myFunction } from './lib/index.js';
+const beginning = () => {
+    showChange(window.location.hash);
+    window.addEventListener("hashchange", () => showChange(window.location.hash))
+}
+window.addEventListener("load", beginning)
 
-myFunction();
+//import { myFunction } from './lib/index.js';
+
+//myFunction();
