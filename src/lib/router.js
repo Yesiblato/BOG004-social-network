@@ -13,5 +13,5 @@ export const showChange = (route) => {
     default:
       break;
   }
-  console.log(route);
+  //console.log(route);
 };
