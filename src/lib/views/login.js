@@ -14,6 +14,7 @@ export const loginPage = () => {
     </div>
     `;
   const container = document.createElement('div');
+  container.setAttribute("class", "containerPrincipal")
   container.innerHTML = viewLogin;
 
   // const mail = container.querySelector('#mail').value;

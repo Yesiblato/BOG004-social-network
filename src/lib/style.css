@@ -1,0 +1,35 @@
+
+/* *{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+    height:100%;
+    width: 100%;
+} */
+
+body{
+    margin: 0;
+    box-sizing: border-box;
+    background:  linear-gradient( to top , #84fab0 0%, #8fd3f4 100%);
+    width: 100%;
+    height: 100%;
+    border: 2px solid brown;
+}
+
+img{
+    width: 10em;
+    height: 10em;
+}
+#container-login{
+    height: 100vh;
+    display: flex;
+    flex-flow: column wrap;
+}
+#login-form{
+    display: flex;
+}
+/* #showPages{
+    display: flex;
+    flex-flow: row wrap;
+
+} */
