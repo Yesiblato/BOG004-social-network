@@ -23,10 +23,13 @@ export const registerPage = () => {
     const name = container.querySelector('#name').value;
     const lastname = container.querySelector('#lastname').value;
     const userName = container.querySelector('#user').value;
-    // if(email=== '')
-    crearUsuario(email, password);
+    if (email === '' || password === '' || name === '' || lastname === '' || userName === '') {
+      alert('Todos los campos son obligatorios');
+    } else {
+      crearUsuario(email, password, name, lastname);
+    }
+    // window.name = name;
+    // window.lastname = lastname;
   });
-  // window.dataRegister = dataRegister;
-
   return container;
 };
