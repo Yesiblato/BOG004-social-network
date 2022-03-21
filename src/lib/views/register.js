@@ -2,6 +2,10 @@ import { crearUsuario } from '../firebase/fnFirebase.js';
 
 export const registerPage = () => {
   const viewRegister = ` 
+      <div id="containerBack">
+        <img class="back" src="img/back.png" alt="atras"> 
+      </div>
+      <div class="container-register">
         <img src="img/logo.png" alt="logo">
         <h2 id="title1" >Latam</h2>
         <h2 id="title2">Sin Frontera</h2>
@@ -11,7 +15,7 @@ export const registerPage = () => {
         <input type="text" placeholder="Usuario" id="user">
         <input type="password" name="" placeholder="Contraseña" id="passwordRegister">
         <button type="button" id="btn-register">Registrate</button>
-        <Button>Registrate con Google</Button>
+      </div>
         `;
   const container = document.createElement('div');
   container.setAttribute("class", "containerPrincipal")
