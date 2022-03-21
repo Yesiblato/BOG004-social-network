@@ -14,6 +14,7 @@ export const registerPage = () => {
         <Button>Registrate con Google</Button>
         `;
   const container = document.createElement('div');
+  container.setAttribute("class", "containerPrincipal")
   container.innerHTML = viewRegister;
 
   const botonRegistrar = container.querySelector('#btn-register');

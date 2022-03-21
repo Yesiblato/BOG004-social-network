@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/9.6.8/firebase-auth.js';
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from './firebase-imports.js';
 
 // Creacion de un user
 export const crearUsuario = (email, password, name, lastName) => {
