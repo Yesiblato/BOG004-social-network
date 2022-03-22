@@ -1,3 +1,4 @@
+import { showChange } from '../router.js';
 export const loginPage = () => {
   const viewLogin = ` 
     <div id ="container-login">
@@ -7,8 +8,8 @@ export const loginPage = () => {
       <form id="login-form">
         <input type="text" placeholder="Correo" id="mail">
         <input type="password" placeholder="Contraseña" id="password">
-        <button id="btn-inciarSesion">Iniciar sesión</button>
-        <Button>Iniciar sesión con Google</Button>
+        <input type="button" class="btn-inciarSesion" placeholder="iniciar Sesion">
+        <input type="button" class="btn-google" placeholder="iniciar Sesion con google">
         <a href="#/registrate"> ¿No tienes cuenta? Registrate </a>
       </form>
     </div>
@@ -17,10 +18,17 @@ export const loginPage = () => {
   container.setAttribute("class", "containerPrincipal")
   container.innerHTML = viewLogin;
 
-  // const mail = container.querySelector('#mail').value;
-  // const password = container.querySelector('#password').value;
-
-  return container;
+  container.querySelector(".btn-inciarSesion").addEventListener("click", () => {
+    showChange('#/muro');
+     const mail = container.querySelector('#mail').value;
+   const password = container.querySelector('#password').value;
+   console.log(mail,password);
+   history.pushState(null , ' ' , '#/muro')
+  });
+  
+ 
+ return container;
 };
+
 
 // document.getElementById("btn-inciarSesion").addEventListener("click", dataLogin);
