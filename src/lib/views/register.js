@@ -18,7 +18,7 @@ export const registerPage = () => {
       </div>
         `;
   const container = document.createElement('div');
-  container.setAttribute("class", "containerPrincipal")
+  container.setAttribute('class', 'containerPrincipal');
   container.innerHTML = viewRegister;
 
   const botonRegistrar = container.querySelector('#btn-register');

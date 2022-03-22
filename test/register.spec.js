@@ -1,9 +1,9 @@
 import { registerPage } from '../src/lib/views/register.js';
 
-jest.mocks('src/lib/firebase/firebase-imports.js');
+// jest.mocks('../src/lib/__mocks__/firebase-imports.js');
 describe('registerPage', () => {
   it('', () => {
-    const result = registerPage();loooo
+    const result = registerPage();
     const email = result.querySelector('#email');
     const pass = result.querySelector('#passwordRegister');
     const name = result.querySelector('#name');
