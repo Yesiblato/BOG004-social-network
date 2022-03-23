@@ -1,6 +1,6 @@
 import { registerPage } from '../src/lib/views/register.js';
 
-// jest.mocks('../src/lib/__mocks__/firebase-imports.js');
+jest.mocks('../src/lib/firebase/firebase-imports.js');
 describe('registerPage', () => {
   it('', () => {
     const result = registerPage();
