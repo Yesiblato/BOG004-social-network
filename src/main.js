@@ -6,7 +6,9 @@ const beginning = () => {
 };
 window.addEventListener('load', beginning());
 
- const back = document.querySelector(".back");
- back.addEventListener("click", () =>  showChange(''));
-
- 
+// const back = document.querySelector('.back');
+// back.addEventListener('click', () => {
+//   // e.preventDefault();
+//   showChange('');
+//   window.history.back();
+// });

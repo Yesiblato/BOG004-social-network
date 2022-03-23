@@ -1,4 +1,6 @@
-import { showChange } from '../router.js';
+import { signIn, signInGoogle } from '../firebase/fnFirebase.js';
+// import { showChange } from '../router.js';
+
 export const loginPage = () => {
   const viewLogin = ` 
     <div id ="container-login">
@@ -8,27 +10,35 @@ export const loginPage = () => {
       <form id="login-form">
         <input type="text" placeholder="Correo" id="mail">
         <input type="password" placeholder="Contraseña" id="password">
-        <input type="button" class="btn-inciarSesion" placeholder="iniciar Sesion">
-        <input type="button" class="btn-google" placeholder="iniciar Sesion con google">
+        <button class="btn-inciarSesion">iniciar Sesion</button>
+        <button class="btn-google">iniciar Sesion con google</button>
         <a href="#/registrate"> ¿No tienes cuenta? Registrate </a>
       </form>
     </div>
     `;
   const container = document.createElement('div');
-  container.setAttribute("class", "containerPrincipal")
+  container.setAttribute('class', 'containerPrincipal');
   container.innerHTML = viewLogin;
 
-  container.querySelector(".btn-inciarSesion").addEventListener("click", () => {
-    showChange('#/muro');
-     const mail = container.querySelector('#mail').value;
-   const password = container.querySelector('#password').value;
-   console.log(mail,password);
-   history.pushState(null , ' ' , '#/muro')
+  container.querySelector('.btn-inciarSesion').addEventListener('click', (e) => {
+    e.preventDefault();
+    const email = container.querySelector('#mail').value;
+    const password = container.querySelector('#password').value;
+    console.log(email, password);
+    if (email === '' || password === '') {
+      alert('Todos los campos son obligatorios');
+    } else {
+      signIn(email, password);
+    }
   });
-  
- 
- return container;
-};
 
+  container.querySelector('.btn-google').addEventListener('click', (e) => {
+    console.log("btn google");
+    e.preventDefault();
+    signInGoogle();
+  });
+
+  return container;
+};
 
 // document.getElementById("btn-inciarSesion").addEventListener("click", dataLogin);

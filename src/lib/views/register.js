@@ -1,4 +1,5 @@
-import { crearUsuario } from '../firebase/fnFirebase.js';
+import { createUser } from '../firebase/fnFirebase.js';
+import { showChange } from '../router.js';
 
 export const registerPage = () => {
   const viewRegister = ` 
@@ -21,6 +22,12 @@ export const registerPage = () => {
   container.setAttribute('class', 'containerPrincipal');
   container.innerHTML = viewRegister;
 
+  const back = container.querySelector('.back');
+  back.addEventListener('click', () => {
+    showChange('');
+    window.history.back();
+  });
+
   const botonRegistrar = container.querySelector('#btn-register');
   botonRegistrar.addEventListener('click', () => {
     const email = container.querySelector('#email').value;
@@ -31,7 +38,7 @@ export const registerPage = () => {
     if (email === '' || password === '' || name === '' || lastname === '' || userName === '') {
       alert('Todos los campos son obligatorios');
     } else {
-      crearUsuario(email, password, name, lastname);
+      createUser(email, password, name, lastname);
     }
     // window.name = name;
     // window.lastname = lastname;
