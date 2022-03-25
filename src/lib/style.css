@@ -64,3 +64,19 @@ img{
     color: aliceblue;
 }
 
+#containerErrorP {
+
+    margin:0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 0.7em;
+    color: #0A032F;
+    font-weight: bold;
+}
+
+#noteError {
+    margin:0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 0.7em;
+    color: #0A032F;
+    font-weight: bold;
+}

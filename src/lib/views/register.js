@@ -15,6 +15,7 @@ export const registerPage = () => {
         <input type="text" placeholder="Apellido" id="lastname">
         <input type="text" placeholder="Usuario" id="user">
         <input type="password" name="" placeholder="Contraseña" id="passwordRegister">
+        <p id = "noteError"></p>
         <button type="button" id="btn-register">Registrate</button>
       </div>
         `;
@@ -36,7 +37,9 @@ export const registerPage = () => {
     const lastname = container.querySelector('#lastname').value;
     const userName = container.querySelector('#user').value;
     if (email === '' || password === '' || name === '' || lastname === '' || userName === '') {
-      alert('Todos los campos son obligatorios');
+      const prueba = container.querySelector('#noteError');
+      prueba.innerHTML = 'Todos los campos son obligatorios';
+      // alert('Todos los campos son obligatorios');
     } else {
       createUser(email, password, name, lastname);
     }

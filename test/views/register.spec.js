@@ -1,26 +1,25 @@
-import { registerPage } from '../src/lib/views/register.js';
+import { registerPage } from '../../src/lib/views/register.js';
 
-jest.mocks('../src/lib/firebase/firebase-imports.js');
-jest.mocks('../src/lib/firebase/firebase-config-imports.js');
+jest.mock('../../src/lib/firebase/firebase-imports.js');
 
 describe('registerPage', () => {
-  it('', () => {
+  it('Comprueba que los campos estén llenos correctamente', () => {
     const result = registerPage();
     const email = result.querySelector('#email');
     const pass = result.querySelector('#passwordRegister');
     const name = result.querySelector('#name');
     const lastName = result.querySelector('#lastname');
     const user = result.querySelector('#user');
+    const prueba = result.querySelector('#noteError');
 
-    email.value = '';
+    email.value = 'hola';
     pass.value = '';
     name.value = '';
     lastName.value = '';
     user.value = '';
-
-    const btn = result.querySelector('btn-register');
+    const btn = result.querySelector('#btn-register');
     btn.dispatchEvent(new Event('click'));
 
-    expect(alert).toBe('Todos los campos son obligatorios');
+    expect(prueba.textContent).toBe('Todos los campos son obligatorios');
   });
 });

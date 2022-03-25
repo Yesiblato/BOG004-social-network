@@ -3,6 +3,7 @@ import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, signInW
 import { showChange } from '../router.js';
 
 // Creacion de un usuarios.
+
 export const createUser = (email, password, name, lastName) => {
   const auth = getAuth();
   createUserWithEmailAndPassword(auth, email, password)
@@ -45,29 +46,44 @@ export const signIn = (email, password) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorMessage, errorCode);
+      if (errorCode === 'auth/invalid-email') {
+        alert('La dirección de correo electrónico no es válida.');
+      }
+      if (errorCode === 'auth/user-disabled') {
+        alert('El usuario correspondiente al correo electrónico dado ha sido deshabilitado.');
+      }
+      if (errorCode === 'auth/user-not-found') {
+        alert('No hay un usuario correspondiente al correo electrónico dado.');
+      }
+      if (errorCode === 'auth/wrong-password') {
+        alert('La contraseña no es válida');
+      }
     });
 };
 
 // Inicio de Sesion con Google.
 export const signInGoogle = () => {
   const auth = getAuth();
-  const provider = new GoogleAuthProvider();// TODO: solucionar el bug
+  const provider = new GoogleAuthProvider();
   console.log('provider: ', provider);
   signInWithPopup(auth, provider)
     .then((result) => {
     // This gives you a Google Access Token. You can use it to access the Google API.
-      // const credential = GoogleAuthProvider.credentialFromResult(result);
-      // const token = credential.accessToken;
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
       // The signed-in user info.
       const user = result.user;
       console.log(`El usuario ${user} se ha autenticado!!!`);
+      console.log('credenciales: ', credential, token);
+      window.location = '#/muro';
+      // showChange('#/muro')
     // ...
     }).catch((error) => {
     // Handle Errors here.
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
+      const errorCode = error.code;
+      const errorMessage = error.message;
       // eslint-disable-next-line no-console
-      console.error(error);
+      console.log(error);
+      console.log('primero ', errorCode, 'segundo ', errorMessage);
     });
 };
-
