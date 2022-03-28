@@ -1,8 +1,9 @@
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword,
   GoogleAuthProvider, signInWithPopup } from './firebase-imports.js';
 import { showChange } from '../router.js';
+import { mostrarErrores } from '../../main.js';
 
-// Creacion de un usuarios.
+ // Creacion de un usuarios.
 
 export const createUser = (email, password, name, lastName) => {
   const auth = getAuth();
@@ -20,13 +21,8 @@ export const createUser = (email, password, name, lastName) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorMessage, errorCode);
-      if (errorCode === 'auth/invalid-email') {
-        alert('El correo no es válido');
-      } else if (errorCode === 'auth/weak-password') {
-        alert('Su contraseña es débil');
-      } else if (errorCode === 'auth/email-already-in-use') {
-        alert('El correo ya esta en uso');
-      }
+      mostrarErrores(errorCode);
+     
     });
 };
 

@@ -10,11 +10,11 @@ export const registerPage = () => {
         <img src="img/logo.png" alt="logo">
         <h2 id="title1" >Latam</h2>
         <h2 id="title2">Sin Frontera</h2>
-        <input type="text" placeholder="Correo electrónico" id="email">
-        <input type="text" placeholder="Nombre" id="name">
-        <input type="text" placeholder="Apellido" id="lastname">
-        <input type="text" placeholder="Usuario" id="user">
-        <input type="password" name="" placeholder="Contraseña" id="passwordRegister">
+        <input type="text" placeholder="Correo electrónico" id="email" class = "input-register" >
+        <input type="text" placeholder="Nombre" id="name" class = "input-register" >
+        <input type="text" placeholder="Apellido" id="lastname" class = "input-register" >
+        <input type="text" placeholder="Usuario" id="user" class = "input-register" >
+        <input type="password" name="" placeholder="Contraseña" id="passwordRegister" class = "input-register" >
         <p id = "noteError"></p>
         <button type="button" id="btn-register">Registrate</button>
       </div>
@@ -23,6 +23,27 @@ export const registerPage = () => {
   container.setAttribute('class', 'containerPrincipal');
   container.innerHTML = viewRegister;
 
+  // const clearInput = container.querySelectorAll('.input-register');
+  // clearInput.forEach(element => { 
+  //   clearInput.addEventListener('change', () => {
+  //   clearInput.innerText= '';
+  // })
+  // }); 
+  
+
+  // const clearInput = container.querySelectorAll('.input-register');
+  // clearInput.forEach(element => { 
+  //   element.addEventListener('change', () => {
+  //   clearInput.innerText= '';
+  // })
+  // }); 
+
+
+  const inputEmail = container.querySelector('#email');
+  inputEmail.addEventListener('change', () => {
+   container.querySelector('#noteError').innerText= ''; 
+  })
+  
   const back = container.querySelector('.back');
   back.addEventListener('click', () => {
     showChange('');
