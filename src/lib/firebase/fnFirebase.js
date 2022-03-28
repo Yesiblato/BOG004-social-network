@@ -1,27 +1,32 @@
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword,
+import { fnCreateuser } from '../controllers.js';
+import {signInWithEmailAndPassword,  
   GoogleAuthProvider, signInWithPopup } from './firebase-imports.js';
 import { showChange } from '../router.js';
-import { mostrarErrores } from '../../main.js';
+// import { mostrarErrores } from '../../main.js';
 
  // Creacion de un usuarios.
+  
 
 export const createUser = (email, password, name, lastName) => {
-  const auth = getAuth();
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
+    fnCreateuser (email, password)
+    .then(() => {
       alert(`Hola ${name} ${lastName} bienvenido a Latam sin fronteras, confirma tu correo.`);
-      sendEmailVerification(auth.currentUser)
-        .then(() => {
-          // Email verification sent!
-        });
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorMessage, errorCode);
-      mostrarErrores(errorCode);
+      const mensajeError = document.querySelector("#noteError");
+      if (errorCode === 'auth/invalid-email') {
+        mensajeError.innerText='El correo no es válido';
+      
+      } else if (errorCode === 'auth/weak-password') {
+        mensajeError.innerText='su contraseña es debil';
+      
+      } else if (errorCode === 'auth/email-already-in-use') {
+        mensajeError.innerText='el correo ya esta en uso';
+        
+      }
      
     });
 };
