@@ -5,9 +5,11 @@ import { signIn, signInGoogle } from '../firebase/fnFirebase.js';
 export const loginPage = () => {
   const viewLogin = ` 
     <div id ="container-login">
-      <img src="img/logo.png" alt="logo">
-      <h2 id="title1">Latam</h2>
-      <h2 id="title2">Sin Frontera</h2>
+      <div class="mediaLogin">
+        <img src="img/logo.png" alt="logo">
+        <h2 id="title1">Latam</h2>
+        <h2 id="title2">Sin Fronteras</h2>
+      </div>
       <form id="login-form">
         <input type="text" placeholder="Correo" id="mail">
         <input type="password" placeholder="Contraseña" id="password">

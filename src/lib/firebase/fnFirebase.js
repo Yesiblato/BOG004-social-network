@@ -1,8 +1,5 @@
 /* eslint-disable import/no-cycle */
-import { fnCreateuser, fnSignIn } from '../controllers.js';
-import {
-  GoogleAuthProvider, signInWithPopup,
-} from './firebase-imports.js';
+import { fnCreateuser, fnSignIn, fnSingGoogle } from '../controllers.js';
 import { showChange } from '../router.js';
 // import { mostrarErrores } from '../../main.js';
 
@@ -13,18 +10,30 @@ export const createUser = (email, password, name, lastName) => {
       const viewModal = `
       <div class='modal-container'>
         <div class='modal modal-close'>
-          <p class='close'>x</p>
-          <img src="img/logo.png" alt="logo">
+          <p class='close'>x</p>.
+          <div class='containerImg'>
+            <img src="img/logo.png" alt="logo">
+          </div>  
           <h2 id="title1" >Latam</h2>
-          <h2 id="title2">Sin Frontera</h2>
-          <h3>¡Gracias ${name} por unirte a Latam sin fronteras!</h3>
+          <h2 id="title2">Sin Fronteras</h2>
+          <h3>¡Gracias ${name} ${lastName} por unirte a Latam sin fronteras!</h3>
           <h3>Confirma tu correo electrónico</h3>
-          <h3>Acabamos de enviarte un mensaje de confirmación a ${lastName}</h3>
+          <h3>Acabamos de enviarte un mensaje de confirmación a ${email}</h3>
         </div> 
       </div>
       `;
       const bringContainer = document.querySelector('.containerPrincipal');
       bringContainer.innerHTML = viewModal;
+      const close = bringContainer.querySelector('.close');
+      const modal = bringContainer.querySelector('.modal');
+      const modalC = bringContainer.querySelector('.modal-container');
+      modalC.style.opacity = '1';
+      modalC.style.visibility = 'visible';
+      modal.classList.toggle('modal-close');
+      close.addEventListener('click', () => {
+        modal.classList.toggle('modal-close');
+        showChange('#/muro');
+      });
       // alert(`Hola ${name} ${lastName} bienvenido a Latam sin fronteras, confirma tu correo.`);
       // video de modal voy en minuto 19 https://www.youtube.com/watch?v=c3MbFWr-NT4
     })
@@ -55,7 +64,6 @@ export const signIn = (email, password) => {
       const errorMessage = error.message;
       console.log(errorMessage, errorCode);
       const mensajeError = document.querySelector('#containerErrorP');
-      console.log('error de login' + mensajeError);
       if (errorCode === 'auth/invalid-email') {
         mensajeError.innerText = 'La dirección de correo electrónico no es válida';
       } else if (errorCode === 'auth/user-disabled') {
@@ -70,27 +78,12 @@ export const signIn = (email, password) => {
 
 // Inicio de Sesion con Google.
 export const signInGoogle = () => {
-  const auth = getAuth();
-  const provider = new GoogleAuthProvider();
-  console.log('provider: ', provider);
-  signInWithPopup(auth, provider)
-    .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      // The signed-in user info.
-      const user = result.user;
-      console.log(`El usuario ${user} se ha autenticado!!!`);
-      console.log('credenciales: ', credential, token);
+  fnSingGoogle()
+    .then(() => {
       window.location = '#/muro';
       // showChange('#/muro')
     // ...
-    }).catch((error) => {
-    // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // eslint-disable-next-line no-console
-      console.log(error);
-      console.log('primero ', errorCode, 'segundo ', errorMessage);
+    }).catch(() => {
+
     });
 };

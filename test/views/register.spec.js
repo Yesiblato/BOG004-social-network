@@ -10,7 +10,7 @@ describe('registerPage', () => {
     const name = result.querySelector('#name');
     const lastName = result.querySelector('#lastname');
     const user = result.querySelector('#user');
-    const prueba = result.querySelector('#noteError');
+    const noteError = result.querySelector('#noteError');
 
     email.value = 'hola';
     pass.value = '';
@@ -20,6 +20,6 @@ describe('registerPage', () => {
     const btn = result.querySelector('#btn-register');
     btn.dispatchEvent(new Event('click'));
 
-    expect(prueba.textContent).toBe('Todos los campos son obligatorios');
+    expect(noteError.textContent).toBe('Todos los campos son obligatorios');
   });
 });

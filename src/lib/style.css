@@ -4,9 +4,8 @@ body{
     background:  linear-gradient( to top , #84fab0 0%, #8fd3f4 100%);
     width: 100%;
     height: 100%;
-    border: 2px solid brown;
-
 }
+
 h2{
     font-family: 'Dancing Script', cursive;
 }
@@ -20,11 +19,7 @@ h2{
     font-size: 2em;
     margin-bottom: 1em;
 }
-/* #containerBack{
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-} */
+
 .back{
     margin:0%;
     width: 2em;
@@ -45,8 +40,9 @@ img{
     display: flex;
     flex-flow: column wrap;
     align-items: center;
+    font-family: 'Ubuntu', sans-serif;
 }
-#login-form{
+#login-form, .formRegister{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,16 +54,18 @@ img{
     border: none;
     border-radius: 0.3em;
     margin: 0.5em; 
+    font-family: 'Ubuntu', sans-serif;
 }
 #containerPrincipal, button {
     background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+    font-weight: bold;
     color: aliceblue;
 }
 
 #containerErrorP {
 
     margin:0;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     font-size: 0.7em;
     color: red;
     /*color: #0A032F;*/
@@ -76,7 +74,7 @@ img{
 
 #noteError {
     margin:0;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     font-size: 0.7em;
     color: red;
     font-weight: bold;
@@ -98,22 +96,105 @@ img{
 }
 
 .modal{
-    width: 40%;
-    height: 50%;
-    background: white;
+    width: 80%;
+    height: 80%;
+    background:  linear-gradient( to top , #84fab0 0%, #8fd3f4 100%);
     /*overflow: hidden;*/
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    align-items: center;
     position: relative;
     transition: transform 1s;
     transform: translateY(0%);
-}
-.modal-close{
-    transform: translateY(-200%);
+    border-radius: 10px;
+    font-family: 'Ubuntu', sans-serif;
 }
 
-.modal img{
-    height: 40%;
+.modal h3{
+    margin: 0;
+    padding: 0.5em 1em;
+}
+
+.close{
+    position: absolute;
+    top: 1px;
+    right: 5px;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin: 0.5em 0;
+    background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+    color: white;
+    font-size: 1.5em;
+    /*font-weight: bold;*/
+    line-height: 25px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.modal-close{
+    /* transform: translateY(-200%); */
+    display: none;
+}
+
+.containerImg{
+    width: 5em;
+    height: 5em;
+}
+.containerImg img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+@media only screen and (min-width: 960px){
+    
+    #container-login, .container-register{
+        height: 100vh;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 8em;
+    }
+
+    #title1{
+        margin: 0%;
+        font-size: 7em;
+    
+    }
+
+    #title2{
+        margin: 0%;
+        font-size: 4em;
+        margin-bottom: 1em;
+    }
+
+    img{
+        margin-top: 1em;
+        width: 9em;
+        height: 9em;
+    }
+
+    #containerPrincipal, input, button{
+        width: 22em;
+        height: 3em;
+        border: none;
+        border-radius: 0.3em;
+        margin: 0.5em; 
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 1em;
+    }
+
+    #containerPrincipal, button{
+        font-weight: bold;
+    }
+
+    .mediaLogin, .mediaRegister{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
 }

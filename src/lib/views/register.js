@@ -8,9 +8,12 @@ export const registerPage = () => {
         <img class="back" src="img/back.png" alt="atras"> 
       </div>
       <div class="container-register">
-        <img src="img/logo.png" alt="logo">
-        <h2 id="title1" >Latam</h2>
-        <h2 id="title2">Sin Frontera</h2>
+        <div class="mediaRegister">
+          <img src="img/logo.png" alt="logo">
+          <h2 id="title1" >Latam</h2>
+          <h2 id="title2">Sin Fronteras</h2>
+        </div>
+        <div class="formRegister">
         <input type="text" placeholder="Correo electrónico" id="email" class = "input-register" >
         <input type="text" placeholder="Nombre" id="name" class = "input-register" >
         <input type="text" placeholder="Apellido" id="lastname" class = "input-register" >
@@ -18,27 +21,12 @@ export const registerPage = () => {
         <input type="password" name="" placeholder="Contraseña" id="passwordRegister" class = "input-register" >
         <p id = "noteError"></p>
         <button type="button" id="btn-register">Registrate</button>
+        </div>
       </div>
         `;
   const container = document.createElement('div');
   container.setAttribute('class', 'containerPrincipal');
   container.innerHTML = viewRegister;
-
-  // const clearInput = container.querySelectorAll('.input-register');
-  // clearInput.forEach(element => { 
-  //   clearInput.addEventListener('change', () => {
-  //   clearInput.innerText= '';
-  // })
-  // }); 
-  
-
-  // const clearInput = container.querySelectorAll('.input-register');
-  // clearInput.forEach(element => { 
-  //   element.addEventListener('change', () => {
-  //   clearInput.innerText= '';
-  // })
-  // }); 
-
 
   const inputEmail = container.querySelector('#email');
   inputEmail.addEventListener('change', () => {
@@ -51,11 +39,6 @@ export const registerPage = () => {
     window.history.back();
   });
 
-  let close = document.querySelector('.close');
-  // let open = document.querySelector('.close');
-  let modal = document.querySelector('.modal');
-  let modalC = document.querySelector('.modal-container');
-
   const botonRegistrar = container.querySelector('#btn-register');
   botonRegistrar.addEventListener('click', () => {
     const email = container.querySelector('#email').value;
@@ -64,11 +47,11 @@ export const registerPage = () => {
     const lastname = container.querySelector('#lastname').value;
     const userName = container.querySelector('#user').value;
     if (email === '' || password === '' || name === '' || lastname === '' || userName === '') {
-      const prueba = container.querySelector('#noteError');
-      prueba.innerHTML = 'Todos los campos son obligatorios';
+      const noteError = container.querySelector('#noteError');
+      noteError.innerHTML = 'Todos los campos son obligatorios';
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
+      }, 2000);
       // alert('Todos los campos son obligatorios');
     } else {
       createUser(email, password, name, lastname);
