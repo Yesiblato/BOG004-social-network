@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { signIn, signInGoogle } from '../firebase/fnFirebase.js';
 // import { showChange } from '../router.js';
 
@@ -10,7 +11,7 @@ export const loginPage = () => {
       <form id="login-form">
         <input type="text" placeholder="Correo" id="mail">
         <input type="password" placeholder="Contraseña" id="password">
-        <p id = "containerErrorP"> </p>
+        <p id= "containerErrorP"> </p>
         <button class="btn-inciarSesion">iniciar Sesion</button>
         <button class="btn-google">iniciar Sesion con google</button>
         <a href="#/registrate"> ¿No tienes cuenta? Registrate </a>
@@ -21,6 +22,11 @@ export const loginPage = () => {
   container.setAttribute('class', 'containerPrincipal');
   container.innerHTML = viewLogin;
 
+  const inputEmailLogin = container.querySelector('#mail');
+  inputEmailLogin.addEventListener('change', () => {
+    container.querySelector('#containerErrorP').innerText = '';
+  });
+
   container.querySelector('.btn-inciarSesion').addEventListener('click', (e) => {
     e.preventDefault();
     const email = container.querySelector('#mail').value;
@@ -29,7 +35,7 @@ export const loginPage = () => {
     if (email === '' || password === '') {
       const parrafoError = container.querySelector('#containerErrorP');
       parrafoError.innerHTML = 'Todos los campos son obligatorios';
-      document.getElementById('container-login').reset();
+      // document.getElementById('container-login').reset();
     } else {
       signIn(email, password);
     }

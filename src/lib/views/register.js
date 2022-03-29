@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { createUser } from '../firebase/fnFirebase.js';
 import { showChange } from '../router.js';
 
@@ -41,14 +42,19 @@ export const registerPage = () => {
 
   const inputEmail = container.querySelector('#email');
   inputEmail.addEventListener('change', () => {
-   container.querySelector('#noteError').innerText= ''; 
-  })
-  
+    container.querySelector('#noteError').innerText = '';
+  });
+
   const back = container.querySelector('.back');
   back.addEventListener('click', () => {
     showChange('');
     window.history.back();
   });
+
+  let close = document.querySelector('.close');
+  // let open = document.querySelector('.close');
+  let modal = document.querySelector('.modal');
+  let modalC = document.querySelector('.modal-container');
 
   const botonRegistrar = container.querySelector('#btn-register');
   botonRegistrar.addEventListener('click', () => {
@@ -60,6 +66,9 @@ export const registerPage = () => {
     if (email === '' || password === '' || name === '' || lastname === '' || userName === '') {
       const prueba = container.querySelector('#noteError');
       prueba.innerHTML = 'Todos los campos son obligatorios';
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
       // alert('Todos los campos son obligatorios');
     } else {
       createUser(email, password, name, lastname);
