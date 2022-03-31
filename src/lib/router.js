@@ -7,7 +7,7 @@ export const showChange = (route) => {
   mainContainer.innerHTML = '';
   switch (route) {
     case '':
-      mainContainer.appendChild(loginPage());
+     return mainContainer.appendChild(loginPage());
       // console.log(window.location.hash);
       break;
     case '#/registrate':
