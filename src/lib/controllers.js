@@ -65,5 +65,5 @@ export const postPage = async () => {
     console.log(agregar);
   });
   //console.log(postList)
-  return postList; 
+  return postList;
 }
