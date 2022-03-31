@@ -1,6 +1,6 @@
 import { showChange } from '../../src/lib/router.js';
 import { registerPage } from '../../src/lib/views/register.js';
-// git st
+
 jest.mock('../../src/lib/firebase/firebase-imports.js');
 
 describe('registerPage', () => {
