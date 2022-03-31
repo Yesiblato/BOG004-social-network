@@ -4,7 +4,7 @@ import { signIn, signInGoogle } from '../firebase/fnFirebase.js';
 
 export const loginPage = () => {
   const viewLogin = ` 
-    <div id ="container-login">
+  <div id ="container-login">
       <div class="mediaLogin">
         <img src="img/logo.png" alt="logo">
         <h2 id="title1">Latam</h2>
@@ -18,8 +18,8 @@ export const loginPage = () => {
         <button class="btn-google">iniciar Sesion con google</button>
         <a href="#/registrate"> ¿No tienes cuenta? Registrate </a>
       </form>
-    </div>
-    `;
+  </div>
+  `;
   const container = document.createElement('div');
   container.setAttribute('class', 'containerPrincipal');
   container.innerHTML = viewLogin;

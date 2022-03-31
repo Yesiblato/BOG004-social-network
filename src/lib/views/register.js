@@ -36,7 +36,7 @@ export const registerPage = () => {
   const back = container.querySelector('.back');
   back.addEventListener('click', () => {
     showChange('');
-    window.history.back();
+    // window.history.back();
   });
 
   const botonRegistrar = container.querySelector('#btn-register');

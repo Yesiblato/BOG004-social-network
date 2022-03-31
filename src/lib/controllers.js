@@ -1,6 +1,6 @@
 import {
   getAuth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword,
-  GoogleAuthProvider, signInWithPopup,
+  GoogleAuthProvider, signInWithPopup, getFirestore, collection, addDoc, getDocs,
 } from './firebase/firebase-imports.js';
 
 // Creación de usuario
@@ -53,3 +53,17 @@ export const fnSingGoogle = () => {
       console.log('primero ', errorCode, 'segundo ', errorMessage);
     });
 };
+
+// export const postPage = async () => {
+//   const db = getFirestore();
+//   const querySnapshot = await getDocs(collection(db, 'latam'));
+//   // let postList = [];
+//   querySnapshot.forEach((doc) => {
+//     const data = doc.data();
+//     // postList.push(data);
+//     const agregar = addDoc(`${doc.id} => ${data.usuario} ${data.post}`);
+//     console.log(agregar);
+//   });
+//   //console.log(postList)
+//   return postList; 
+// }

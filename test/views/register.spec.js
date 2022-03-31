@@ -1,5 +1,5 @@
-import { registerPage } from '../../src/lib/views/register.js';
 import { showChange } from '../../src/lib/router.js';
+import { registerPage } from '../../src/lib/views/register.js';
 
 jest.mock('../../src/lib/firebase/firebase-imports.js');
 
@@ -33,22 +33,20 @@ describe('arrow back ', () => {
     const mainContainer = document.querySelector('#showPages');
     back.dispatchEvent(new Event('click'));
     const htmlTemplate = `
-    <div class="containerPrincipal">.
     <div id="container-login">
       <div class="mediaLogin">
-        <img alt="logo" src="img/logo.png" />
+        <img src="img/logo.png" alt="logo">
         <h2 id="title1">Latam</h2>
         <h2 id="title2">Sin Fronteras</h2>
       </div>
       <form id="login-form">
-        <input id="mail" placeholder="Correo" type="text" />
-        <input id="password" placeholder="Contraseña" type="password" />
+        <input type="text" placeholder="Correo" id="mail">
+        <input type="password" placeholder="Contraseña" id="password">
         <p id="containerErrorP"> </p>
         <button class="btn-inciarSesion">iniciar Sesion</button>
         <button class="btn-google">iniciar Sesion con google</button>
         <a href="#/registrate"> ¿No tienes cuenta? Registrate </a>
       </form>
-    </div>
     </div>
     `;
     expect(showChange('').innerHTML).toEqual(htmlTemplate);
