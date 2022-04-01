@@ -10,6 +10,7 @@ export const timelinePage = () => {
   <div> 
     <input type="text" placeholder="¿Qué nos vas a compartir hoy?" id="post">
     <button type="button" id="btn-post">Publicar</button>
+    <div id="showPost"></div>
   </div> 
 </div>
       `;
@@ -26,8 +27,18 @@ export const timelinePage = () => {
   container.querySelector('#btn-post').addEventListener('click', () => {
     const post = container.querySelector('#post').value;
     console.log(post);
-    postPage(post);
-  });
+    postPage(post).then((response) => {
+       console.log('hiiii',  response);
+       const showPost = container.querySelector("#showPost");
+       response.forEach((element) => {
+         showPost.innerHTML = ` 
+         <h3>${element.usuario}</h3>
+         <p>${element.post}</p>
+         ` 
+       })
+    }) 
+    // e.preventDefaul();
 
-  return container;
+   });
+    return container;
 };
