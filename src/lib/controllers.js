@@ -54,16 +54,30 @@ export const fnSingGoogle = () => {
     });
 };
 
-export const postPage = async () => {
-  const db = getFirestore();
-  const querySnapshot = await getDocs(collection(db, 'latam'));
-  // let postList = [];
-  querySnapshot.forEach((doc) => {
-    const data = doc.data();
-    // postList.push(data);
-    const agregar = addDoc(`${doc.id} => ${data.usuario} ${data.post}`);
-    console.log(agregar);
-  });
-  //console.log(postList)
-  return postList;
+// export const postPage = async () => {
+//   const db = getFirestore();
+//   // const querySnapshot = await getDocs(collection(db, 'latam'));
+//   //  let postList = [];
+//   // querySnapshot.forEach((doc) => {
+//   //   const data = doc.data();
+//   //   console.log(data);
+//   //    postList.push(data);
+//   //   console.log((`${doc.id} => ${data.usuario} ${data.post}`));
+    
+//   // });
+//   // //console.log(postList)
+//   // return postList;
+// }
+export const postPage = async (post) => {
+     const db = getFirestore();
+     addDoc(collection(db, 'post'), {post} )
+     const querySnapshot = await getDocs(collection(db, 'post'));
+     let postList = [];
+     querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      console.log(data);
+      postList.push(data);
+     });
+     console.log('holaaaaaaa', postList);
+     return postList
 }
