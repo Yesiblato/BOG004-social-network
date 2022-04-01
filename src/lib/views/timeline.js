@@ -28,7 +28,6 @@ export const timelinePage = () => {
     console.log(post);
     postPage(post);
   });
- 
+
   return container;
- 
 };
