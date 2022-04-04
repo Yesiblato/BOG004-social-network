@@ -1,5 +1,6 @@
 // import { showChange } from '../router.js';
-import { postPage } from '../controllers.js'; 
+// import { async } from 'regenerator-runtime';
+import { } from '../controllers.js'; 
 export const timelinePage = () => {
   const viewTimeline = ` 
   <div> 
@@ -12,7 +13,7 @@ export const timelinePage = () => {
     <button type="button" id="btn-post">Publicar</button>
     <div id="showPost"></div>
   </div> 
-</div>
+  </div>
       `;
   const container = document.createElement('div');
   container.setAttribute('class', 'containerPrincipal');
@@ -24,21 +25,28 @@ export const timelinePage = () => {
   //      const password = container.querySelector('#password').value;
   //      console.log(mail,password);
   //  });
-  container.querySelector('#btn-post').addEventListener('click', () => {
-    const post = container.querySelector('#post').value;
-    console.log(post);
-    postPage(post).then((response) => {
-       console.log('hiiii',  response);
-       const showPost = container.querySelector("#showPost");
-       response.forEach((element) => {
-         showPost.innerHTML = ` 
-         <h3>${element.usuario}</h3>
-         <p>${element.post}</p>
-         ` 
-       })
-    }) 
-    // e.preventDefaul();
+//   container.querySelector('#btn-post').addEventListener('click', () => {
+//     const post = container.querySelector('#post').value;
+//     console.log(post);
+//     postPage(post).then((response) => {
+//       console.log('hiiii', response);
+//       const showPost = container.querySelector('#showPost');
+//       response.forEach((element) => {
+//         showPost.innerHTML = ` 
+//         <h3>${element.user}</h3>
+//         <p>${element.post}</p>
+//         `;
+//       });
+//       console.log(showPost);
+//     });
+//     // e.preventDefaul();
+//   });
+//   return container;
+// };
 
-   });
-    return container;
+  // container.querySelector('#btn-post').addEventListener('click', async () => {
+  //   const post = container.querySelector('#post').value;
+  //   const querySnapshot = await getPost();
+  //   console.log(querySnapshot);
+  // });
 };

@@ -68,16 +68,24 @@ export const fnSingGoogle = () => {
 //   // //console.log(postList)
 //   // return postList;
 // }
-export const postPage = async (post) => {
-     const db = getFirestore();
-     addDoc(collection(db, 'post'), {post} )
-     const querySnapshot = await getDocs(collection(db, 'post'));
-     let postList = [];
-     querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      console.log(data);
-      postList.push(data);
-     });
-     console.log('holaaaaaaa', postList);
-     return postList
-}
+
+// export const postPage = async (post) => {
+//   const db = getFirestore();
+//   addDoc(collection(db, 'post'), { post });
+//   const querySnapshot = await getDocs(collection(db, 'post'));
+//   const postList = [];
+//   querySnapshot.forEach((doc) => {
+//     const data = doc.data();
+//     console.log('data= ', data);
+//     postList.push(data);
+//   });
+//   console.log('holaaaaaaa', postList);
+//   return postList;
+// };
+
+// const db = getFirestore();
+// export const postPage = (post) => {
+//   addDoc(collection(db, 'post'), { post });
+// };
+
+// export const getPost = () => getDocs(collection(db, 'post'));
