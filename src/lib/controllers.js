@@ -1,3 +1,4 @@
+// import { async } from 'regenerator-runtime';
 import {
   getAuth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword,
   GoogleAuthProvider, signInWithPopup, getFirestore, collection, addDoc, getDocs,
@@ -69,15 +70,28 @@ export const fnSingGoogle = () => {
 //   // return postList;
 // }
 export const postPage = async (post) => {
-     const db = getFirestore();
-     addDoc(collection(db, 'post'), {post} )
-     const querySnapshot = await getDocs(collection(db, 'post'));
-     let postList = [];
-     querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      console.log(data);
-      postList.push(data);
-     });
-     console.log('holaaaaaaa', postList);
-     return postList
-}
+  const db = getFirestore();
+  addDoc(collection(db, 'post'), {post} )
+  const querySnapshot = await getDocs(collection(db, 'post'));
+  let postList = [];
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    console.log(data);
+    postList.push(data);
+  });
+  console.log('holaaaaaaa', postList);
+  return postList;
+};
+
+// Firestore
+
+// export const savePost = (post) => {
+//   const db = getFirestore();
+//   addDoc(collection(db, 'post'), { post });
+// };
+
+// export const getPost = () => {
+//   const db = getFirestore();
+//   const querySnapshot = await getDocs(collection(db, 'post'));
+//   console.log('documento ', querySnapshot);
+// };
