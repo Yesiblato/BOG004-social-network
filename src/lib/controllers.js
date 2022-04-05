@@ -1,7 +1,11 @@
+import { app } from './firebase/firebase.js';
+
 import {
   getAuth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword,
-  GoogleAuthProvider, signInWithPopup, getFirestore, collection, addDoc, getDocs,
+  GoogleAuthProvider, signInWithPopup, getFirestore, collection, addDoc, getDocs, deleteDoc, doc,
+  getDoc, onSnapshot, updateDoc,
 } from './firebase/firebase-imports.js';
+// import { async } from 'regenerator-runtime';
 
 // Creación de usuario
 export const fnCreateuser = (email, password) => {
@@ -54,38 +58,76 @@ export const fnSingGoogle = () => {
     });
 };
 
-// export const postPage = async () => {
-//   const db = getFirestore();
-//   // const querySnapshot = await getDocs(collection(db, 'latam'));
-//   //  let postList = [];
-//   // querySnapshot.forEach((doc) => {
-//   //   const data = doc.data();
-//   //   console.log(data);
-//   //    postList.push(data);
-//   //   console.log((`${doc.id} => ${data.usuario} ${data.post}`));
-    
-//   // });
-//   // //console.log(postList)
-//   // return postList;
-// }
+// Creacion de post
+export const postPage = async (post) => {
+  const db = getFirestore();
+  const collectionPost = await addDoc(collection(db, 'post'), { post });
+  return collectionPost;
+};
 
-// export const postPage = async (post) => {
+// Obtener el post de la base de datos
+export const getPost = async () => {
+  const db = getFirestore();
+  const querySnapshot = await getDocs(collection(db, 'post'));
+  const postList = [];
+  querySnapshot.forEach((item) => {
+    console.log('item ', item);
+    const data = item.data();
+    const id = item.id;
+    console.log(data);
+    postList.push({ data, id });
+  });
+  // console.log('holaaaaaaa', postList);
+  return postList;
+};
+
+// export const getPost = async () => {
 //   const db = getFirestore();
-//   addDoc(collection(db, 'post'), { post });
-//   const querySnapshot = await getDocs(collection(db, 'post'));
-//   const postList = [];
-//   querySnapshot.forEach((doc) => {
-//     const data = doc.data();
-//     console.log('data= ', data);
-//     postList.push(data);
+//   await onSnapshot((collection(db, 'post')), (snapshot) => {
+//     const postList = [];
+//     snapshot.forEach((item) => {
+//       console.log('item ', item);
+//       const data = item.data();
+//       const id = item.id;
+//       console.log(data);
+//       postList.push({ data, id });
+//     });
+//     console.log('PostList', postList);
+//     return postList;
 //   });
-//   console.log('holaaaaaaa', postList);
-//   return postList;
 // };
 
-// const db = getFirestore();
-// export const postPage = (post) => {
-//   addDoc(collection(db, 'post'), { post });
-// };
+// console.log('Salida getPost Copntroller', getPost());
 
-// export const getPost = () => getDocs(collection(db, 'post'));
+// Eliminando post
+export const deletePost = (id) => {
+  const db = getFirestore();
+  return deleteDoc(doc(db, 'post', id));
+};
+
+// Obteniendo un post
+export const getAPost = (id) => {
+  const db = getFirestore();
+  return getDoc(doc(db, 'post', id));
+};
+
+export const updatePost = (id, newField) => {
+  const db = getFirestore();
+  updateDoc(doc(db, 'post', id), newField);
+};
+
+// Actualizacion de post en tiempo real
+export const onGetPost = () => {
+  const db = getFirestore();
+  const posts = [];
+  onSnapshot(collection(db, "post"), (querySnapshot) => {
+    querySnapshot.forEach((item) => {
+      posts.push(item.data());
+    });
+    // console.log("Current data: ", doc.data());
+    // onSnapshot(collection(db, 'post'), callback);
+  });
+  return posts;
+};
+// // expot const onGetPost = onSnapshot(doc(db, "post"), (doc) => {
+// //   console.log("Current data: ", doc.data());
