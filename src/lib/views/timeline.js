@@ -1,6 +1,8 @@
 // import { showChange } from '../router.js';
 // import { async } from 'regenerator-runtime';
-import { postPage, getPost, deletePost, getAPost, updatePost } from '../controllers.js';
+import {
+  postPage, getPost, deletePost, getAPost, updatePost, signOff,
+} from '../controllers.js';
 
 let editStatus = false;
 window.editStatus = editStatus;
@@ -11,10 +13,19 @@ export const timelinePage = () => {
   const viewTimeline = ` 
   <div id="container-feed"> 
     <div id='beginning'> 
-      <img src="img/menu.png" alt="menu">
+      <img class= "nav-bar" id="btnMenu" src="img/menu.png" alt="menu">
       <img src="img/logo.png" alt="logo">
-      <img src="img/logout.png" alt="Cerrar Sesión">
+      <img class= "btn-signOut" src="img/logout.png" alt="Cerrar Sesión">
     </div>
+    <div>
+      <nav class= "main-nav">
+        <ul class= "menu" id="menu">
+          <li class="menu-item"><a class="menu-link" href="#">Cultura</a></li>
+          <li class="menu-item"><a class="menu-link" href="#">Lugares</a></li>
+          <li class="menu-item"><a class="menu-link" href="#">Salud</a></li>
+        </ul>
+      </nav>
+      </div>
     <div id="container-share"> 
       <input type="text" placeholder="¿Qué nos vas a compartir hoy?" id="post">
       <div id= "btnPublicar">
@@ -52,21 +63,36 @@ export const timelinePage = () => {
   //           <p>${element.data.post}</p>
   //         </div>
   //         <div id = "imgPost">
-  //           <img data-id = "${element.id}" class="btn-delete" src= "img/eliminar.png" alt="eliminar" >
+  // <img data-id = "${element.id}" class="btn-delete" src= "img/eliminar.png" alt="eliminar" >
   //           <img data-id = "${element.id}" class="btn-edit" src= "img/editar.png" alt="editar" >
   //         </div>
   //       </div>
   //         `;
   //   });
+  const btnSignOff = container.querySelector('.btn-signOut');
+  console.log('btn salir ', btnSignOff);
+  btnSignOff.addEventListener('click', () => {
+    signOff();
+  });
+
+  // const btnMenu = document.querySelector('#btnMenu');
+  // const menu = document.querySelector('menu');
+  // btnMenu.addEventListener('click', () => {
+  //   menu.classList.toggle('mostrar');
+  // });
 
   const allPost = getPost();
+  console.log('Holiii', getPost());
   const showPost = container.querySelector('#showPost');
   allPost.then((response) => {
     response.forEach((element) => {
+      // console.log('element de timeline ', element);
       showPost.innerHTML += ` 
         <div class= "containerPost">
+           <img class ="userImage" src="${element.data.photo}"> 
           <div id = "listPost">
-            <p>${element.id}</p>
+            <h3>${element.data.name}</h3>
+            <p>${element.data.email}</p>
             <p>${element.data.post}</p>
           </div>
           <div id = "imgPost">
@@ -111,15 +137,15 @@ export const timelinePage = () => {
     const post = container.querySelector('#post').value;
     console.log(post);
     if (!editStatus) {
-      postPage(post);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+      postPage();
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 1000);
     } else {
       updatePost(id, { post });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 1000);
     }
     editStatus = false;
   });

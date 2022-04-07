@@ -3,9 +3,8 @@ import { app } from './firebase/firebase.js';
 import {
   getAuth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword,
   GoogleAuthProvider, signInWithPopup, getFirestore, collection, addDoc, getDocs, deleteDoc, doc,
-  getDoc, onSnapshot, updateDoc,
+  query, orderBy, getDoc, onSnapshot, updateDoc, serverTimestamp, onAuthStateChanged, signOut,
 } from './firebase/firebase-imports.js';
-// import { async } from 'regenerator-runtime';
 
 // Creación de usuario
 export const fnCreateuser = (email, password) => {
@@ -25,10 +24,12 @@ export const fnCreateuser = (email, password) => {
 // Inicio de sesión con correo y contraseña
 export const fnSignIn = (email, password) => {
   const auth = getAuth();
+  // console.log('auth', auth);
   return signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
+      console.log('userCreditial ', userCredential);
       return userCredential;
     });
 };
@@ -37,7 +38,7 @@ export const fnSignIn = (email, password) => {
 export const fnSingGoogle = () => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
-  console.log('provider: ', provider);
+  // console.log('provider: ', provider);
   return signInWithPopup(auth, provider)
     .then((result) => {
     // This gives you a Google Access Token. You can use it to access the Google API.
@@ -58,26 +59,92 @@ export const fnSingGoogle = () => {
     });
 };
 
+
+// // console.log('intentoooooooo');
+// // Perfil del usuario activo
+// //export const userProfile = () => {
+// const auth = getAuth();
+// const user = auth.currentUser;
+// console.log('perfil de usuario', user);
+// console.log('usuario de perfil', getAuth());
+// if (user !== null) {
+//   // The user object has basic properties such as display name, email, etc.
+//   const name = user.displayName;
+//   const email = user.email;
+//   const photoURL = user.photoURL;
+//   const emailVerified = user.emailVerified;
+//   console.log('prueba user', name, email, photoURL, emailVerified);
+//   // The user's ID, unique to the Firebase project. Do NOT use
+//   // this value to authenticate with your backend server, if
+//   // you have one. Use User.getToken() instead.
+//   const uid = user.uid;
+//   }
+// //};
+export const observador = () =>{
+const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      console.log('user OnAuth', user);
+      const uid = user.uid;
+      window.location.hash = '#/muro';
+      // ...
+    } else { 
+      // User is signed out
+      // ...
+    }
+  });
+};
+// Cerrar sesión
+export const signOff = () => {
+  const auth = getAuth();
+  signOut(auth).then(() => {
+    // Sign-out successful.
+    window.location.hash = '';
+  }).catch((error) => {
+    console.log('error de cierre de sesion', error);
+    // An error happened.
+  });
+};
+
 // Creacion de post
 export const postPage = async (post) => {
-  const db = getFirestore();
-  const collectionPost = await addDoc(collection(db, 'post'), { post });
-  return collectionPost;
+  try {
+    const db = getFirestore();
+    const auth = getAuth();
+    const user = auth.currentUser;
+    console.log('user', user);
+    const collectionPost = await addDoc(collection(db, 'post'), { post });
+    // getPost();
+    return collectionPost;
+  } catch (e) {
+    // console.log('error', e);
+  }
+  // return getPost();
 };
 
 // Obtener el post de la base de datos
 export const getPost = async () => {
   const db = getFirestore();
-  const querySnapshot = await getDocs(collection(db, 'post'));
+  const querySnapshot = await getDocs(query(collection(db, 'post'), orderBy('date')));
   const postList = [];
   querySnapshot.forEach((item) => {
-    console.log('item ', item);
+    // console.log('item ', item.data());
     const data = item.data();
     const id = item.id;
-    console.log(data);
-    postList.push({ data, id });
+    const email = item.email;
+    const name = item.name;
+    const photo = item.photoURL;
+    // const post = item.post;
+    const date = serverTimestamp();
+    console.log('datos del usuario ', data, id, email, name, photo, date);
+    postList.push({
+      data, id, email, name, photo, date,
+    });
   });
   // console.log('holaaaaaaa', postList);
+  console.log('array de post ', postList);
   return postList;
 };
 
@@ -129,5 +196,3 @@ export const onGetPost = () => {
   });
   return posts;
 };
-// // expot const onGetPost = onSnapshot(doc(db, "post"), (doc) => {
-// //   console.log("Current data: ", doc.data());

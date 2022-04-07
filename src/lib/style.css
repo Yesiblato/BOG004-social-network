@@ -62,6 +62,33 @@ img{
     color: aliceblue;
 }
 
+#containerPrincipal, .nav-bar {
+    display: block;
+    cursor: pointer;
+}
+
+.menu {
+    list-style: none;
+    padding: 0%;
+    margin: 2%;
+    width: 7em;
+    background: white;
+    margin-left: -100%; 
+    transition: all 0.5s;
+}
+
+.menu-link {
+    display: inline-block;
+    color: black;
+    padding: 20px;
+    font-size: 1.2em;
+    text-decoration: none;
+}
+
+.mostrar {
+    margin-left: 0%;
+}
+
 #containerErrorP {
 
     margin:0;
@@ -208,7 +235,7 @@ img{
     display: flex;
     flex-direction: column;
     margin-top: 0.5em;
-    height: 4em;
+    height: 8em;
     width: 16em;
     padding-top: 0.3em;
     
@@ -223,7 +250,7 @@ img{
 #listPost  p {
     margin: 0;
     margin-bottom: 0.2em;
-    padding-bottom: 0.2em;
+    /* padding-bottom: 0.2em; */
 }
 
 #imgPost {
@@ -273,6 +300,37 @@ img{
 
     #containerPrincipal, button{
         font-weight: bold;
+    }
+
+    #beginning {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: 2em;
+    }
+    .nav-bar{
+        display: none;
+    }
+
+    .menu{
+        margin: 0%;
+        position: absolute;
+        top: 2em; 
+        display: flex;
+        flex-direction: column;
+    }
+
+    .menu-link:hover {
+        background: #8fd3f4;
+    }
+
+    #listPost {
+        display: flex;
+        flex-direction: column;
+        margin-top: 0.5em;
+        height: 10em;
+        width: 25em;
+        padding-top: 0.3em;
     }
 
     .mediaLogin, .mediaRegister{
