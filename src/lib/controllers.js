@@ -131,3 +131,5 @@ export const onGetPost = () => {
 };
 // // expot const onGetPost = onSnapshot(doc(db, "post"), (doc) => {
 // //   console.log("Current data: ", doc.data());
+
+// contador de likes
