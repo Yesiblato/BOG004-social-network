@@ -1,8 +1,9 @@
 // import { showChange } from '../router.js';
 // import { async } from 'regenerator-runtime';
 import {
-  postPage, getPost, deletePost, getAPost, updatePost, signOff, fnLikes,
+  postPage, getPost, deletePost, getAPost, updatePost, fnLikes, signOff,
 } from '../controllers.js';
+import { getAuth } from '../firebase/firebase-imports.js';
 
 let editStatus = false;
 window.editStatus = editStatus;
@@ -59,6 +60,13 @@ export const timelinePage = () => {
     // console.log('RESPONSE', response);
     response.forEach((element) => {
       // console.log('ELEMENT ', element);
+      const auth = getAuth();
+      console.log('auth', auth);
+      const user = auth.currentUser;
+      console.log('USUARIO ', user);
+      const userEmail = user.email;
+      console.log('email de like', userEmail);
+      const imageName = element.data.likes.includes(userEmail) ? 'img/like.png' : 'img/dislike.png';
       showPost.innerHTML += ` 
         <div class= "containerPost">
            <img class ="userImage" src="${element.data.photo}"> 
@@ -68,8 +76,8 @@ export const timelinePage = () => {
             <p>${element.data.post}</p>
           </div>
           <div id = "imgPost">
-            <p id = "likes"> </p>
-            <img data-id = "${element.id}" class="btn-dislike" src= "img/dislike.png" alt="dislike" >
+            <p id = "likes">${element.data.likes.length} </p>
+            <img data-id = "${element.id}" class="btn-dislike" src= "${imageName}" alt="dislike" >
             <img data-id = "${element.id}" class="btn-delete" src= "img/eliminar.png" alt="eliminar" >
             <img data-id = "${element.id}" class="btn-edit" src= "img/editar.png" alt="editar" >
           </div>
@@ -80,16 +88,15 @@ export const timelinePage = () => {
     const btnlikes = showPost.querySelectorAll('.btn-dislike');
     btnlikes.forEach((btn) => {
       btn.addEventListener('click', ({ target: { dataset } }) => {
-
         console.log('boton likes', btn);
         fnLikes(dataset.id);
-        console.log('esto no se que es ', getPost().querySnapshot.likes);
-        const dataLikes = postLikes.data().likes;
-        console.log('ESTOS SONLOS DATA LIKES ', dataLikes);
-        const showLikes = showPost.querySelectorAll('#likes');
-        showLikes.forEach((element) => {
-          element.innerHTML = 'numeber';
-        });
+        // console.log('esto no se que es ', getPost().querySnapshot.likes);
+        // const dataLikes = postLikes.data().likes;
+        // console.log('ESTOS SONLOS DATA LIKES ', dataLikes);
+        // const showLikes = showPost.querySelectorAll('#likes');
+        // showLikes.forEach((element) => {
+        //   element.innerHTML = 'numeber';
+        // });
       });
     });
 

@@ -61,23 +61,24 @@ export const fnSingGoogle = () => {
     });
 };
 
-export const observador = () => {
-  const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      console.log('user OnAuth', user);
-      const uid = user.uid;
-      console.log('uid observador', uid);
-      window.location.hash = '#/muro';
-      // ...
-    } else {
-      // User is signed out
-      // ...
-    }
-  });
-};
+// export const observador = () => {
+//   const auth = getAuth();
+//   onAuthStateChanged(auth, (user) => {
+//     if (user) {
+//       // User is signed in, see docs for a list of available properties
+//       // https://firebase.google.com/docs/reference/js/firebase.User
+//       console.log('user OnAuth', user);
+//       const uid = user.uid;
+//       console.log('uid observador', uid);
+//       window.location.hash = '#/muro';
+//       // ...
+//     } else {
+//       // User is signed out
+//       // ...
+//     }
+//   });
+// };
+
 // Cerrar sesión
 export const signOff = () => {
   const auth = getAuth();
