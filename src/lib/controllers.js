@@ -102,7 +102,7 @@ export const signOff = () => {
   signOut(auth).then(() => {
     // Sign-out successful.
     window.location.hash = '';
-  }).catch((error) => {
+  }).catch((error) => {___
     console.log('error de cierre de sesion', error);
     // An error happened.
   });
