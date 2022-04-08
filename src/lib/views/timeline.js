@@ -24,8 +24,8 @@ export const timelinePage = () => {
           <li class="menu-item"><a class="menu-link" href="#">Cultura</a></li>
           <li class="menu-item"><a class="menu-link" href="#">Lugares</a></li>
           <li class="menu-item"><a class="menu-link" href="#">Salud</a></li>
-          <li class="menu-item"><a class="menu-link" href="#">tramites legales</a></li>
-          <li class="menu-item"><a class="menu-link" href="#">noticias</a></li>
+          <li class="menu-item"><a class="menu-link" href="#">Tramites legales</a></li>
+          <li class="menu-item"><a class="menu-link" href="#">Noticias</a></li>
         </ul>
       </nav>
       </div>
