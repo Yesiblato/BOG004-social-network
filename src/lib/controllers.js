@@ -4,9 +4,11 @@ import {
   getAuth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword,
   GoogleAuthProvider, signInWithPopup, getFirestore, collection, addDoc, getDocs, deleteDoc, doc,
   query, orderBy, getDoc, onSnapshot, updateDoc, serverTimestamp, onAuthStateChanged, signOut,
+  setDoc,
 } from './firebase/firebase-imports.js';
 
 // Creación de usuario
+
 export const fnCreateuser = (email, password) => {
   const auth = getAuth();
   return createUserWithEmailAndPassword(auth, email, password)
@@ -59,38 +61,18 @@ export const fnSingGoogle = () => {
     });
 };
 
-
-// // console.log('intentoooooooo');
-// // Perfil del usuario activo
-// //export const userProfile = () => {
-// const auth = getAuth();
-// const user = auth.currentUser;
-// console.log('perfil de usuario', user);
-// console.log('usuario de perfil', getAuth());
-// if (user !== null) {
-//   // The user object has basic properties such as display name, email, etc.
-//   const name = user.displayName;
-//   const email = user.email;
-//   const photoURL = user.photoURL;
-//   const emailVerified = user.emailVerified;
-//   console.log('prueba user', name, email, photoURL, emailVerified);
-//   // The user's ID, unique to the Firebase project. Do NOT use
-//   // this value to authenticate with your backend server, if
-//   // you have one. Use User.getToken() instead.
-//   const uid = user.uid;
-//   }
-// //};
-export const observador = () =>{
-const auth = getAuth();
+export const observador = () => {
+  const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
       console.log('user OnAuth', user);
       const uid = user.uid;
+      console.log('uid observador', uid);
       window.location.hash = '#/muro';
       // ...
-    } else { 
+    } else {
       // User is signed out
       // ...
     }
@@ -110,16 +92,29 @@ export const signOff = () => {
 
 // Creacion de post
 export const postPage = async (post) => {
+  // let user = getAuth().currentUser;
+  // console.log('este es el ususario', user.uid);
   try {
     const db = getFirestore();
     const auth = getAuth();
     const user = auth.currentUser;
-    console.log('user', user);
-    const collectionPost = await addDoc(collection(db, 'post'), { post });
+    console.log('USER', user);
+    const email = user.email;
+    const likes = [];
+    const countLikes = 0;
+    const photo = user.photoURL;
+    const name = user.displayName;
+    const date = serverTimestamp();
+    const userId = user.uid;
+    console.log('USERUID', userId);
+    const collectionPost = await addDoc(collection(db, 'post'), {
+      post, email, photo, name, date, likes,
+    });
     // getPost();
+    console.log('COLLECTIONPOST', collectionPost);
     return collectionPost;
   } catch (e) {
-    // console.log('error', e);
+    console.log('error', e);
   }
   // return getPost();
 };
@@ -127,44 +122,25 @@ export const postPage = async (post) => {
 // Obtener el post de la base de datos
 export const getPost = async () => {
   const db = getFirestore();
-  const querySnapshot = await getDocs(query(collection(db, 'post'), orderBy('date')));
+  const querySnapshot = await getDocs(query(collection(db, 'post'), orderBy('date', 'desc')));
   const postList = [];
   querySnapshot.forEach((item) => {
     // console.log('item ', item.data());
     const data = item.data();
     const id = item.id;
-    const email = item.email;
-    const name = item.name;
-    const photo = item.photoURL;
-    // const post = item.post;
-    const date = serverTimestamp();
-    console.log('datos del usuario ', data, id, email, name, photo, date);
+    const likes = data.likes;
+    const countLikes = likes.length;
+    console.log('Data.likes ', likes.length);
+
     postList.push({
-      data, id, email, name, photo, date,
+      data, id, likes,
+      // email, name, photo, date,
     });
   });
   // console.log('holaaaaaaa', postList);
-  console.log('array de post ', postList);
+  // console.log('array de post ', postList);
   return postList;
 };
-
-// export const getPost = async () => {
-//   const db = getFirestore();
-//   await onSnapshot((collection(db, 'post')), (snapshot) => {
-//     const postList = [];
-//     snapshot.forEach((item) => {
-//       console.log('item ', item);
-//       const data = item.data();
-//       const id = item.id;
-//       console.log(data);
-//       postList.push({ data, id });
-//     });
-//     console.log('PostList', postList);
-//     return postList;
-//   });
-// };
-
-// console.log('Salida getPost Copntroller', getPost());
 
 // Eliminando post
 export const deletePost = (id) => {
@@ -178,7 +154,7 @@ export const getAPost = (id) => {
   return getDoc(doc(db, 'post', id));
 };
 
-export const updatePost = (id, newField) => {
+export const updatePost = (id, newField, userId) => {
   const db = getFirestore();
   updateDoc(doc(db, 'post', id), newField);
 };
@@ -195,4 +171,40 @@ export const onGetPost = () => {
     // onSnapshot(collection(db, 'post'), callback);
   });
   return posts;
+};
+
+export const fnLikes = async (id) => {
+  try {
+    const db = getFirestore();
+    const collectionLikes = doc(collection(db, 'post'), id);
+
+    const auth = getAuth();
+    const user = auth.currentUser;
+    // const idUser = user.uid;
+    // console.log('USER likes', idUser);
+    const postLikes = await getDoc(collectionLikes);
+    let likes = postLikes.data().likes;
+    if (likes === undefined) {
+      likes = [];
+    }
+    const index = likes.indexOf(user.email);
+    if (index === -1) {
+      likes.push(user.email);
+    } else {
+      likes.splice(index);
+    }
+
+    await setDoc(
+      collectionLikes,
+      {
+        likes,
+      },
+      { merge: true },
+    );
+    console.log('Document update with ID: ', collectionLikes.id);
+    getPost();
+  } catch (e) {
+    console.log('Error adding document: ', e);
+  }
+  getPost();
 };

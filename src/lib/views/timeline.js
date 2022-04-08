@@ -1,7 +1,7 @@
 // import { showChange } from '../router.js';
 // import { async } from 'regenerator-runtime';
 import {
-  postPage, getPost, deletePost, getAPost, updatePost, signOff,
+  postPage, getPost, deletePost, getAPost, updatePost, signOff, fnLikes,
 } from '../controllers.js';
 
 let editStatus = false;
@@ -23,6 +23,8 @@ export const timelinePage = () => {
           <li class="menu-item"><a class="menu-link" href="#">Cultura</a></li>
           <li class="menu-item"><a class="menu-link" href="#">Lugares</a></li>
           <li class="menu-item"><a class="menu-link" href="#">Salud</a></li>
+          <li class="menu-item"><a class="menu-link" href="#">tramites legales</a></li>
+          <li class="menu-item"><a class="menu-link" href="#">noticias</a></li>
         </ul>
       </nav>
       </div>
@@ -39,38 +41,7 @@ export const timelinePage = () => {
   container.setAttribute('class', 'containerPrincipal');
   container.innerHTML = viewTimeline;
 
-  // container.querySelector('#btn-post').addEventListener('click', () => {
-  //   const post = container.querySelector('#post').value;
-  //   console.log(post);
-  //   savePost(post);
-  // });
-  //
-  // console.log('ongetpost', onGetPost());
-
-  // const allPost = getPost();
-  // console.log('all post== ', allPost);
-  // const showPost = container.querySelector('#showPost');
-  // console.log('all post== ', allPost);
-  // allPost.then((response) => {
-  //   console.log('all post== ', allPost);
-  //   console.log('Response  == ', response);
-  //   // console.log('getPost ',onGetPost());
-  //   response.forEach((element) => {
-  //     showPost.innerHTML += ` 
-  //       <div class= "containerPost">
-  //         <div id = "listPost">
-  //           <p>${element.id}</p>
-  //           <p>${element.data.post}</p>
-  //         </div>
-  //         <div id = "imgPost">
-  // <img data-id = "${element.id}" class="btn-delete" src= "img/eliminar.png" alt="eliminar" >
-  //           <img data-id = "${element.id}" class="btn-edit" src= "img/editar.png" alt="editar" >
-  //         </div>
-  //       </div>
-  //         `;
-  //   });
   const btnSignOff = container.querySelector('.btn-signOut');
-  console.log('btn salir ', btnSignOff);
   btnSignOff.addEventListener('click', () => {
     signOff();
   });
@@ -82,11 +53,12 @@ export const timelinePage = () => {
   // });
 
   const allPost = getPost();
-  console.log('Holiii', getPost());
+  // console.log('ALLPOST - GETPOST()', getPost());
   const showPost = container.querySelector('#showPost');
   allPost.then((response) => {
+    // console.log('RESPONSE', response);
     response.forEach((element) => {
-      // console.log('element de timeline ', element);
+      // console.log('ELEMENT ', element);
       showPost.innerHTML += ` 
         <div class= "containerPost">
            <img class ="userImage" src="${element.data.photo}"> 
@@ -96,12 +68,29 @@ export const timelinePage = () => {
             <p>${element.data.post}</p>
           </div>
           <div id = "imgPost">
+            <p id = "likes"> </p>
             <img data-id = "${element.id}" class="btn-dislike" src= "img/dislike.png" alt="dislike" >
             <img data-id = "${element.id}" class="btn-delete" src= "img/eliminar.png" alt="eliminar" >
             <img data-id = "${element.id}" class="btn-edit" src= "img/editar.png" alt="editar" >
           </div>
         </div>
           `;
+    });
+
+    const btnlikes = showPost.querySelectorAll('.btn-dislike');
+    btnlikes.forEach((btn) => {
+      btn.addEventListener('click', ({ target: { dataset } }) => {
+
+        console.log('boton likes', btn);
+        fnLikes(dataset.id);
+        console.log('esto no se que es ', getPost().querySnapshot.likes);
+        const dataLikes = postLikes.data().likes;
+        console.log('ESTOS SONLOS DATA LIKES ', dataLikes);
+        const showLikes = showPost.querySelectorAll('#likes');
+        showLikes.forEach((element) => {
+          element.innerHTML = 'numeber';
+        });
+      });
     });
 
     const btnsDelete = showPost.querySelectorAll('.btn-delete');
@@ -137,7 +126,7 @@ export const timelinePage = () => {
     const post = container.querySelector('#post').value;
     console.log(post);
     if (!editStatus) {
-      postPage();
+      postPage(post);
       // setTimeout(() => {
       //   window.location.reload();
       // }, 1000);
