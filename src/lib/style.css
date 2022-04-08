@@ -290,6 +290,7 @@ footer{
         padding: 0 7em; 
     } */
     
+    
     #container-login, .container-register{
         height: 100vh;
         display: flex;
