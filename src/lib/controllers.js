@@ -4,9 +4,11 @@ import {
   getAuth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword,
   GoogleAuthProvider, signInWithPopup, getFirestore, collection, addDoc, getDocs, deleteDoc, doc,
   query, orderBy, getDoc, onSnapshot, updateDoc, serverTimestamp, onAuthStateChanged, signOut,
+  setDoc,
 } from './firebase/firebase-imports.js';
 
 // Creación de usuario
+
 export const fnCreateuser = (email, password) => {
   const auth = getAuth();
   return createUserWithEmailAndPassword(auth, email, password)
@@ -90,19 +92,24 @@ export const signOff = () => {
 
 // Creacion de post
 export const postPage = async (post) => {
-  let user = getAuth().currentUser;
-  console.log('este es el ususario', user.uid);
+  // let user = getAuth().currentUser;
+  // console.log('este es el ususario', user.uid);
   try {
     const db = getFirestore();
     const auth = getAuth();
     const user = auth.currentUser;
+    console.log('USER', user);
     const email = user.email;
-    const likes = []; 
+    const likes = [];
+    const countLikes = 0;
     const photo = user.photoURL;
     const name = user.displayName;
     const date = serverTimestamp();
-    console.log('USER', user);
-    const collectionPost = await addDoc(collection(db, 'post'), { post, email, photo, name, date, likes});
+    const userId = user.uid;
+    console.log('USERUID', userId);
+    const collectionPost = await addDoc(collection(db, 'post'), {
+      post, email, photo, name, date, likes,
+    });
     // getPost();
     console.log('COLLECTIONPOST', collectionPost);
     return collectionPost;
@@ -121,9 +128,12 @@ export const getPost = async () => {
     // console.log('item ', item.data());
     const data = item.data();
     const id = item.id;
+    const likes = data.likes;
+    const countLikes = likes.length;
+    console.log('Data.likes ', likes.length);
 
     postList.push({
-      data, id,
+      data, id, likes,
       // email, name, photo, date,
     });
   });
@@ -162,48 +172,39 @@ export const onGetPost = () => {
   });
   return posts;
 };
-// funcion de dar likes
-// export const likes = () => {
-//   const db = getFirestore();
-//   const auth = getAuth();
-//   const user = auth.currentUser;
-//   const arrayLikes = [];
-//   console.log('id de usuario', user);
-// };
 
-export const fnLikes = async (likes) => {
+export const fnLikes = async (id) => {
   try {
     const db = getFirestore();
+    const collectionLikes = doc(collection(db, 'post'), id);
+
     const auth = getAuth();
     const user = auth.currentUser;
-    const idUser = user.uid;
-    console.log('USER likes', idUser);
-    const collectionLikes = await addDoc(collection(db, 'likes'), { likes });
-    // // getPost();
-    console.log('COLLECTIONLIKES', collectionLikes);
-    // return collectionPost;
+    // const idUser = user.uid;
+    // console.log('USER likes', idUser);
+    const postLikes = await getDoc(collectionLikes);
+    let likes = postLikes.data().likes;
+    if (likes === undefined) {
+      likes = [];
+    }
+    const index = likes.indexOf(user.email);
+    if (index === -1) {
+      likes.push(user.email);
+    } else {
+      likes.splice(index);
+    }
+
+    await setDoc(
+      collectionLikes,
+      {
+        likes,
+      },
+      { merge: true },
+    );
+    console.log('Document update with ID: ', collectionLikes.id);
+    getPost();
   } catch (e) {
-    console.log('error', e);
+    console.log('Error adding document: ', e);
   }
-  // return getPost();
+  getPost();
 };
-
-// Obtener el post de la base de datos
-// export const getPost = async () => {
-//   const db = getFirestore();
-//   const querySnapshot = await getDocs(query(collection(db, 'post'), orderBy('date', 'desc')));
-//   const postList = [];
-//   querySnapshot.forEach((item) => {
-//     // console.log('item ', item.data());
-//     const data = item.data();
-//     const id = item.id;
-
-//     postList.push({
-//       data, id,
-//       // email, name, photo, date,
-//     });
-//   });
-//   // console.log('holaaaaaaa', postList);
-//   // console.log('array de post ', postList);
-//   return postList;
-// };
