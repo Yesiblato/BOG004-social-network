@@ -80,7 +80,7 @@ export const signIn = (email, password) => {
 export const signInGoogle = () => {
   fnSingGoogle()
     .then(() => {
-      window.location = '#/muro';
+      window.location.hash = '#/muro';
       // showChange('#/muro')
     // ...
     }).catch(() => {
