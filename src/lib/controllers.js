@@ -6,6 +6,7 @@ import {
   query, orderBy, getDoc, onSnapshot, updateDoc, serverTimestamp, onAuthStateChanged, signOut,
   setDoc,
 } from './firebase/firebase-imports.js';
+import { showChange } from './router.js';
 
 // Creación de usuario
 
@@ -82,9 +83,14 @@ export const fnSingGoogle = () => {
 // Cerrar sesión
 export const signOff = () => {
   const auth = getAuth();
-  signOut(auth).then(() => {
+  signOut(auth).then((userCredential) => {
     // Sign-out successful.
-    window.location.hash = '';
+    console.log('credential', userCredential);
+    // window.location.hash = '';
+    localStorage.removeItem('user');
+    showChange('');
+    //  console.log( window.location.hash = '');
+     
   }).catch((error) => {___
     console.log('error de cierre de sesion', error);
     // An error happened.
@@ -102,7 +108,6 @@ export const postPage = async (post) => {
     console.log('USER', user);
     const email = user.email;
     const likes = [];
-    const countLikes = 0;
     const photo = user.photoURL;
     const name = user.displayName;
     const date = serverTimestamp();
@@ -130,8 +135,6 @@ export const getPost = async () => {
     const data = item.data();
     const id = item.id;
     const likes = data.likes;
-    const countLikes = likes.length;
-    console.log('Data.likes ', likes.length);
 
     postList.push({
       data, id, likes,

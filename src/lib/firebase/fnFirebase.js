@@ -55,9 +55,10 @@ export const createUser = (email, password, name, lastName) => {
 // Inicio de Sesion con Email y  Contraseña.
 export const signIn = (email, password) => {
   fnSignIn(email, password)
-    .then(() => {
+    .then((userCredential) => {
       showChange('#/muro');
       // window.history.pushState(null, ' ', '#/muro');
+      localStorage.setItem('user', JSON.stringify(userCredential.user));
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -79,9 +80,10 @@ export const signIn = (email, password) => {
 // Inicio de Sesion con Google.
 export const signInGoogle = () => {
   fnSingGoogle()
-    .then(() => {
-      window.location.hash = '#/muro';
-      // showChange('#/muro')
+    .then((userCredential) => {
+      showChange('#/muro');
+      localStorage.setItem('user', JSON.stringify(userCredential.user));
+      
     // ...
     }).catch(() => {
 

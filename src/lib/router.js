@@ -11,11 +11,11 @@ export const showChange = (route) => {
       // console.log(window.location.hash);
       break;
     case '#/registrate':
-      mainContainer.appendChild(registerPage());
+      return mainContainer.appendChild(registerPage());
       // console.log(window.location.hash);
       break;
     case '#/muro':
-      mainContainer.appendChild(timelinePage());
+      return mainContainer.appendChild(timelinePage());
       break;
     default:
 

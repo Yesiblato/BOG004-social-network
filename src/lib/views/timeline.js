@@ -62,7 +62,7 @@ export const timelinePage = () => {
       // console.log('ELEMENT ', element);
       const auth = getAuth();
       console.log('auth', auth);
-      const user = auth.currentUser;
+      const user = JSON.parse(localStorage.getItem('user'));
       console.log('USUARIO ', user);
       const userEmail = user.email;
       console.log('email de like', userEmail);
