@@ -1,4 +1,3 @@
-// import { showChange } from '../router.js';
 // import { async } from 'regenerator-runtime';
 import {
   postPage, getPost, deletePost, getAPost, updatePost, fnLikes, signOff,
@@ -54,18 +53,12 @@ export const timelinePage = () => {
   // });
 
   const allPost = getPost();
-  // console.log('ALLPOST - GETPOST()', getPost());
   const showPost = container.querySelector('#showPost');
   allPost.then((response) => {
-    // console.log('RESPONSE', response);
     response.forEach((element) => {
-      // console.log('ELEMENT ', element);
       const auth = getAuth();
-      console.log('auth', auth);
       const user = JSON.parse(localStorage.getItem('user'));
-      console.log('USUARIO ', user);
       const userEmail = user.email;
-      console.log('email de like', userEmail);
       const imageName = element.data.likes.includes(userEmail) ? 'img/like.png' : 'img/dislike.png';
       showPost.innerHTML += ` 
         <div class= "containerPost">
@@ -90,13 +83,9 @@ export const timelinePage = () => {
       btn.addEventListener('click', ({ target: { dataset } }) => {
         console.log('boton likes', btn);
         fnLikes(dataset.id);
-        // console.log('esto no se que es ', getPost().querySnapshot.likes);
-        // const dataLikes = postLikes.data().likes;
-        // console.log('ESTOS SONLOS DATA LIKES ', dataLikes);
-        // const showLikes = showPost.querySelectorAll('#likes');
-        // showLikes.forEach((element) => {
-        //   element.innerHTML = 'numeber';
-        // });
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 1000);
       });
     });
 
@@ -124,24 +113,19 @@ export const timelinePage = () => {
     });
   });
 
-  // let editStatus = false;
-  // window.editStatus = editStatus;
-  // let id = '';
-  // window.id = id;
-
   container.querySelector('#btn-post').addEventListener('click', () => {
     const post = container.querySelector('#post').value;
     console.log(post);
     if (!editStatus) {
       postPage(post);
-      // setTimeout(() => {
-      //   window.location.reload();
-      // }, 1000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } else {
       updatePost(id, { post });
-      // setTimeout(() => {
-      //   window.location.reload();
-      // }, 1000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     }
     editStatus = false;
   });

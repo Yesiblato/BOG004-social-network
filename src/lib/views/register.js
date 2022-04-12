@@ -35,8 +35,9 @@ export const registerPage = () => {
 
   const back = container.querySelector('.back');
   back.addEventListener('click', () => {
-    showChange('');
+    // showChange('');
     // window.history.back();
+    window.location.href = '';
   });
 
   const botonRegistrar = container.querySelector('#btn-register');
@@ -52,7 +53,6 @@ export const registerPage = () => {
       setTimeout(() => {
         window.location.reload();
       }, 2000);
-      // alert('Todos los campos son obligatorios');
     } else {
       createUser(email, password, name, lastname);
     }

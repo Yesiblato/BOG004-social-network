@@ -3,7 +3,7 @@ import { app } from './firebase/firebase.js';
 import {
   getAuth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword,
   GoogleAuthProvider, signInWithPopup, getFirestore, collection, addDoc, getDocs, deleteDoc, doc,
-  query, orderBy, getDoc, onSnapshot, updateDoc, serverTimestamp, onAuthStateChanged, signOut,
+  query, orderBy, getDoc, onSnapshot, updateDoc, serverTimestamp, signOut,
   setDoc,
 } from './firebase/firebase-imports.js';
 import { showChange } from './router.js';
@@ -14,11 +14,9 @@ export const fnCreateuser = (email, password) => {
   const auth = getAuth();
   return createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      // Signed in
       const user = userCredential.user;
       sendEmailVerification(auth.currentUser)
         .then(() => {
-          // Email verification sent!
         });
       return userCredential;
     });
@@ -27,7 +25,6 @@ export const fnCreateuser = (email, password) => {
 // Inicio de sesión con correo y contraseña
 export const fnSignIn = (email, password) => {
   const auth = getAuth();
-  // console.log('auth', auth);
   return signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
@@ -41,7 +38,6 @@ export const fnSignIn = (email, password) => {
 export const fnSingGoogle = () => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
-  // console.log('provider: ', provider);
   return signInWithPopup(auth, provider)
     .then((result) => {
     // This gives you a Google Access Token. You can use it to access the Google API.
@@ -49,7 +45,6 @@ export const fnSingGoogle = () => {
       const token = credential.accessToken;
       // The signed-in user info.
       const user = result.user;
-      console.log(`El usuario ${user} se ha autenticado!!!`);
       console.log('credenciales: ', credential, token);
       return result;
     }).catch((error) => {
@@ -62,67 +57,41 @@ export const fnSingGoogle = () => {
     });
 };
 
-// export const observador = () => {
-//   const auth = getAuth();
-//   onAuthStateChanged(auth, (user) => {
-//     if (user) {
-//       // User is signed in, see docs for a list of available properties
-//       // https://firebase.google.com/docs/reference/js/firebase.User
-//       console.log('user OnAuth', user);
-//       const uid = user.uid;
-//       console.log('uid observador', uid);
-//       window.location.hash = '#/muro';
-//       // ...
-//     } else {
-//       // User is signed out
-//       // ...
-//     }
-//   });
-// };
-
 // Cerrar sesión
 export const signOff = () => {
   const auth = getAuth();
   signOut(auth).then((userCredential) => {
     // Sign-out successful.
     console.log('credential', userCredential);
-    // window.location.hash = '';
     localStorage.removeItem('user');
-    showChange('');
-    //  console.log( window.location.hash = '');
-     
-  }).catch((error) => {___
+    window.location.href = '';
+    // showChange('');
+    history.pushState(null, '#/muro', '');
+  }).catch((error) => {
     console.log('error de cierre de sesion', error);
-    // An error happened.
   });
 };
 
 // Creacion de post
 export const postPage = async (post) => {
-  // let user = getAuth().currentUser;
-  // console.log('este es el ususario', user.uid);
   try {
     const db = getFirestore();
     const auth = getAuth();
     const user = auth.currentUser;
-    console.log('USER', user);
     const email = user.email;
     const likes = [];
     const photo = user.photoURL;
     const name = user.displayName;
     const date = serverTimestamp();
     const userId = user.uid;
-    console.log('USERUID', userId);
     const collectionPost = await addDoc(collection(db, 'post'), {
       post, email, photo, name, date, likes,
     });
-    // getPost();
     console.log('COLLECTIONPOST', collectionPost);
     return collectionPost;
   } catch (e) {
     console.log('error', e);
-  }
-  // return getPost();
+  };
 };
 
 // Obtener el post de la base de datos
@@ -131,18 +100,14 @@ export const getPost = async () => {
   const querySnapshot = await getDocs(query(collection(db, 'post'), orderBy('date', 'desc')));
   const postList = [];
   querySnapshot.forEach((item) => {
-    // console.log('item ', item.data());
     const data = item.data();
     const id = item.id;
     const likes = data.likes;
 
     postList.push({
       data, id, likes,
-      // email, name, photo, date,
     });
   });
-  // console.log('holaaaaaaa', postList);
-  // console.log('array de post ', postList);
   return postList;
 };
 
@@ -167,12 +132,10 @@ export const updatePost = (id, newField, userId) => {
 export const onGetPost = () => {
   const db = getFirestore();
   const posts = [];
-  onSnapshot(collection(db, "post"), (querySnapshot) => {
+  onSnapshot(collection(db, 'post'), (querySnapshot) => {
     querySnapshot.forEach((item) => {
       posts.push(item.data());
     });
-    // console.log("Current data: ", doc.data());
-    // onSnapshot(collection(db, 'post'), callback);
   });
   return posts;
 };
@@ -184,8 +147,6 @@ export const fnLikes = async (id) => {
 
     const auth = getAuth();
     const user = auth.currentUser;
-    // const idUser = user.uid;
-    // console.log('USER likes', idUser);
     const postLikes = await getDoc(collectionLikes);
     let likes = postLikes.data().likes;
     if (likes === undefined) {

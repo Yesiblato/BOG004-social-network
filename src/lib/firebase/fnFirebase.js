@@ -34,8 +34,6 @@ export const createUser = (email, password, name, lastName) => {
         modal.classList.toggle('modal-close');
         showChange('#/muro');
       });
-      // alert(`Hola ${name} ${lastName} bienvenido a Latam sin fronteras, confirma tu correo.`);
-      // video de modal voy en minuto 19 https://www.youtube.com/watch?v=c3MbFWr-NT4
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -56,8 +54,10 @@ export const createUser = (email, password, name, lastName) => {
 export const signIn = (email, password) => {
   fnSignIn(email, password)
     .then((userCredential) => {
-      showChange('#/muro');
-      // window.history.pushState(null, ' ', '#/muro');
+    window.location.hash = '#/muro';
+
+      // showChange('#/muro');
+      window.history.pushState(null, '', '#/muro');
       localStorage.setItem('user', JSON.stringify(userCredential.user));
     })
     .catch((error) => {
@@ -81,10 +81,10 @@ export const signIn = (email, password) => {
 export const signInGoogle = () => {
   fnSingGoogle()
     .then((userCredential) => {
-      showChange('#/muro');
+      // showChange('#/muro');
+      window.location.hash = '/muro'
+      window.history.pushState(null, '', '#/muro');
       localStorage.setItem('user', JSON.stringify(userCredential.user));
-      
-    // ...
     }).catch(() => {
 
     });

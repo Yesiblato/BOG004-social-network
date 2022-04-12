@@ -37,7 +37,6 @@ export const loginPage = () => {
     if (email === '' || password === '') {
       const parrafoError = container.querySelector('#containerErrorP');
       parrafoError.innerHTML = 'Todos los campos son obligatorios';
-      // document.getElementById('container-login').reset();
     } else {
       signIn(email, password);
     }
@@ -51,5 +50,3 @@ export const loginPage = () => {
 
   return container;
 };
-
-// document.getElementById("btn-inciarSesion").addEventListener("click", dataLogin);
