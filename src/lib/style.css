@@ -245,6 +245,7 @@ img{
     width: 16em;
     padding-top: 0.3em;
     font-family: 'Ubuntu', sans-serif;
+    
     padding-left: 1em;
     padding-right: 1em;
     align-items: center;
@@ -255,12 +256,14 @@ img{
 
 #listPost  p {
     margin: 0;
-    margin-bottom: 0.2em;
+    margin-bottom: 0.4em;
     /* padding-bottom: 0.2em; */
 }
 
 #listPost h3 {
     margin: 0;
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
 }
 
 #imgPost {
@@ -343,7 +346,7 @@ footer{
     #beginning img {
         width: 5.5em;
         height: 5.5em;
-        margin-left: 2em;
+        margin-left: 30em;
     
     }
     .nav-bar{
@@ -357,14 +360,21 @@ footer{
         top: 9em; 
         display: flex;
         flex-direction: column;
-        height: 50%;
-        width: 10em;
+        height: 30%;
+        width: 15em;
+
+
+        margin-left: 30em;
     }
 
     .menu-link:hover {
         background: #8fd3f4;
     }
      
+    .btn-signOut{
+        margin-right: 30em;
+    }
+
     #listPost {
         display: flex;
         flex-direction: column;
@@ -372,6 +382,13 @@ footer{
         height: 10em;
         width: 25em;
         padding-top: 0.3em;
+        font-size: larger;
+
+    }
+    #listPost h3 {
+        margin: 0;
+        margin-top: 0.4em;
+        margin-bottom: 0.5em;
     }
 
     .mediaLogin, .mediaRegister{
