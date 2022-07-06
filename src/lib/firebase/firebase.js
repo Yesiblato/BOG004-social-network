@@ -6,12 +6,12 @@ import { initializeApp } from './firebase-imports.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyBVLwf8T4h6GBhkjCxxxq6tajiaDD6r2Nc',
-  authDomain: 'latam-75bfe.firebaseapp.com',
-  projectId: 'latam-75bfe',
-  storageBucket: 'latam-75bfe.appspot.com',
-  messagingSenderId: '653743169840',
-  appId: '1:653743169840:web:cc83e97858be69290828f5',
+  apiKey: "AIzaSyCqNkBNsfpVggjJDBbLUIbxUspRORxQ0XI",
+  authDomain: "talent-latam.firebaseapp.com",
+  projectId: "talent-latam",
+  storageBucket: "talent-latam.appspot.com",
+  messagingSenderId: "947331364634",
+  appId: "1:947331364634:web:a6f306eead10763c1cdea3"
 };
 
 // Initialize Firebase

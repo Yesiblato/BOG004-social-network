@@ -82,7 +82,7 @@ export const signInGoogle = () => {
   fnSingGoogle()
     .then((userCredential) => {
       // showChange('#/muro');
-      window.location.hash = '/muro'
+      window.location.hash = '/muro';
       window.history.pushState(null, '', '#/muro');
       localStorage.setItem('user', JSON.stringify(userCredential.user));
     }).catch(() => {

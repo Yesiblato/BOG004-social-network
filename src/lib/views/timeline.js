@@ -83,9 +83,9 @@ export const timelinePage = () => {
       btn.addEventListener('click', ({ target: { dataset } }) => {
         console.log('boton likes', btn);
         fnLikes(dataset.id);
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 1000);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       });
     });
 
